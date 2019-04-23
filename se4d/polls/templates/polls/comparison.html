@@ -1,0 +1,17 @@
+<h1>{{ left.question_text }} compared to {{ right.question_text }}</h1>
+
+<table>
+    <tr>
+        <th></th>
+        <th>{{ left.question_text }}</th>
+        <th>{{ right.question_text }}</th>
+    </tr>
+
+    {% for text, left, right in entries %}
+        <tr>
+            <td>{{ text }}</td>
+            <td>{{ left }} vote{{ left|pluralize }}</td>
+            <td>{{ right }} vote{{ right|pluralize }}</td>
+        </tr>
+    {% endfor %}
+</table>

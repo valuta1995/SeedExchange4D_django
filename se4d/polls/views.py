@@ -28,6 +28,22 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+def comparison(request, left_id, right_id):
+    left = get_object_or_404(Question, pk=left_id)
+    right = get_object_or_404(Question, pk=right_id)
+    entries = []
+    for choice_left in left.choice_set.all():
+        for choice_right in right.choice_set.all():
+            if choice_left.choice_text == choice_right.choice_text:
+                entries.append((choice_left.choice_text, choice_left.votes, choice_right.votes))
+    context = {
+        'left': left,
+        'right': right,
+        'entries': entries,
+    }
+    return render(request, 'polls/comparison.html', context)
+
+
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
